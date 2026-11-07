@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "AI & Integration",
+    "description": "I have experience in integrating AI technologies into various applications, including speech-to-text and natural language processing. I have worked with frameworks like FastAPI to build RESTful APIs that leverage AI models for real-time inference.",
+    "thumbnail": "https://i.pinimg.com/736x/ef/60/16/ef60160b1d30021394c18075feaa789a.jpg",
+    "galery": [
+      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg",
+      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg",
+      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "AI & Integration",
+    "description": "I have experience in integrating AI technologies into various applications, including speech-to-text and natural language processing. I have worked with frameworks like FastAPI to build RESTful APIs that leverage AI models for real-time inference.",
+    "thumbnail": "https://i.pinimg.com/736x/17/4a/70/174a707f4246712aef76e905a3eb353a.jpg",
+    "galery": [
+      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg",
+      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg",
+      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Project 03",
+    "description": "Replace with your own project description.",
+    "thumbnail": "https://i.pinimg.com/1200x/27/84/c6/2784c6763e6b41ab610ae537fa79f163.jpg",
+    "galery": []
+  },
+  {
+    "id": 4,
+    "name": "Project 04",
+    "description": "Replace with your own project description.",
+    "thumbnail": "https://i.pinimg.com/736x/8c/2a/4f/8c2a4f2a6dcb7e1efb7ce9ca1b1a8dcc.jpg",
+    "galery": []
+  },
+  {
+    "id": 5,
+    "name": "Project 05",
+    "description": "Replace with your own project description.",
+    "thumbnail": "https://i.pinimg.com/736x/89/26/38/892638b21204e9fc61e9b5e1cd3bba7f.jpg",
+    "galery": []
+  },
+  {
+    "id": 6,
+    "name": "Project 06",
+    "description": "Replace with your own project description.",
+    "thumbnail": "https://i.pinimg.com/736x/7a/f3/88/7af388bcfe22e22c8704e376dd8f954e.jpg",
+    "galery": []
+  }
+]

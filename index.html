@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Don't Just Listen. Feel It.</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&family=Zen+Kurenaido&display=swap"
+    rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (window.lucide) {
+        lucide.createIcons();
+        console.log("Lucide loaded successfully!");
+      } else {
+        console.error("Lucide CDN failed to load!");
+      }
+    });
+  </script>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/cursor-effect.css">
+  <link rel="stylesheet" href="css/me.css">
+  <link rel="stylesheet" href="css/skills.css">
+  <link rel="stylesheet" href="css/projects.css">
+  <link rel="stylesheet" href="css/contact.css">
+</head>
+
+<body>
+
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <nav class="navbar navbar-expand-md fixed-top musofy-navbar" aria-label="Primary navigation">
+    <div class="container">
+      <a class="navbar-brand musofy-brand" href="#home" aria-label="Musofy home">Musofy<span
+          aria-hidden="true">.</span></a>
+      <button class="navbar-toggler musofy-menu-button" type="button" data-bs-toggle="collapse"
+        data-bs-target="#musofyNavigation" aria-controls="musofyNavigation" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="bi bi-list" aria-hidden="true"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="musofyNavigation">
+        <ul class="navbar-nav ms-auto align-items-md-center">
+          <li class="nav-item">
+            <a class="nav-link active" href="#home" aria-current="page">Musofy</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about" aria-label="Me, About">Me</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#skills">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#projects">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#chat">Chat</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container home-section" id="home">
+    <div class="row align-items-center">
+
+      <!-- LEFT SIDE: TITLE & DESCRIPTION -->
+      <div class="col-lg-12 text-center">
+        <h1 class="hero-title w-100">
+          Don't just<br>listen. Feel it.
+        </h1>
+        <p class="hero-desc w-100">
+          Music has a shape. Watch every beat, bassline, and melody come alive in real time. Pick a track, press play,
+          and let sound become something you can see.
+        </p>
+      </div>
+
+      <!-- FREQUENCY VISUALIZER & PLAYLIST -->
+      <div class="col-12 col-lg-8 mx-auto music-layout">
+        <div class="music-cards">
+
+          <!-- FREQUENCY VISUALIZER BOX -->
+          <div class="visualizer-card">
+            <div class="visualizer-canvas-wrap">
+              <canvas id="freqCanvas"></canvas>
+            </div>
+            <!-- Frequency X-Axis Scale -->
+            <div class="freq-labels">
+              <span>20</span>
+              <span>50</span>
+              <span>100</span>
+              <span>200</span>
+              <span>500</span>
+              <span>1k</span>
+              <span>2k</span>
+              <span>5k</span>
+              <span>10k</span>
+            </div>
+
+            <div
+              style="display: flex; align-items: center; background: var(--bg-card); border-top: 1px solid var(--border-subtle);">
+              <!-- Frequency Band Meters: Left Side -->
+              <div class="band-meters" style="display: flex; gap: 1rem; padding: 12px 20px 18px;">
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                  <div class="band-label">BASS</div>
+                  <div class="band-value" id="val-bass">0</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                  <div class="band-label">MID</div>
+                  <div class="band-value" id="val-mid">0</div>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                  <div class="band-label">TREBLE</div>
+                  <div class="band-value" id="val-treble">0</div>
+                </div>
+              </div>
+
+              <!-- Progress Bar: Right Side -->
+              <div class="progress-wrap"
+                style="flex: 1; width: auto; margin: 0; padding: 10px 16px 14px; box-sizing: border-box;">
+                <div class="progress-title" id="currentTrackTitle">Powersound (VIP)</div>
+                <div class="progress-time">
+                  <span id="currentTime">0:00</span>
+                  <span id="duration">0:00</span>
+                </div>
+                <div class="progress-track" id="progressTrack" role="slider" aria-label="Playback progress"
+                  aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                  <div class="progress-fill" id="progressFill"></div>
+                  <div class="progress-thumb" id="progressThumb"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Music controls: previous, play/pause, next -->
+            <div class="transport-controls-slot">
+              <div class="transport-controls" role="group" aria-label="Music playback controls">
+                <button class="transport-button" id="previousTrackButton" type="button"
+                  aria-label="Play previous track">
+                  <i class="bi bi-skip-backward-fill" aria-hidden="true"></i>
+                </button>
+                <button class="transport-button transport-button-play transport-button-primary" id="playPauseButton"
+                  type="button" aria-label="Play Powersound (VIP)" aria-pressed="false">
+                  <i class="bi bi-play-fill" id="playPauseIcon" aria-hidden="true"></i>
+                </button>
+                <button class="transport-button" id="nextTrackButton" type="button" aria-label="Play next track">
+                  <i class="bi bi-skip-forward-fill" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TRACK PLAYER CONTAINER -->
+          <div class="player-card">
+
+
+
+            <!-- Track 1 -->
+            <div class="track-item" id="track-0">
+              <div class="track-info-group">
+                <button class="track-avatar" id="track-control-0" type="button" onclick="toggleTrack(0)"
+                  aria-label="Play Powersound (VIP)" aria-pressed="false">
+                  <img src="assets/thumbnails/powersound-vip.jpg" alt="Powersound (VIP)">
+                  <span class="thumbnail-state" aria-hidden="true">
+                    <i class="bi bi-play-fill thumbnail-action-icon" id="icon-0"></i>
+                    <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
+                  </span>
+                </button>
+                <div>
+                  <div class="track-title">
+                    Powersound (VIP) <span class="fw-light" style="font-size: 12px;"> • recommended</span>
+                  </div>
+                  <div class="track-genre">ELEPS</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Track 2 -->
+            <div class="track-item" id="track-1">
+              <div class="track-info-group">
+                <button class="track-avatar" id="track-control-1" type="button" onclick="toggleTrack(1)"
+                  aria-label="Play Final Boss" aria-pressed="false">
+                  <img src="assets/thumbnails/final-boss.jpg" alt="Final Boss">
+                  <span class="thumbnail-state" aria-hidden="true">
+                    <i class="bi bi-play-fill thumbnail-action-icon" id="icon-1"></i>
+                    <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
+                  </span>
+                </button>
+                <div>
+                  <div class="track-title">
+                    Final Boss
+                  </div>
+                  <div class="track-genre">Nitro Fun</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Track 3 -->
+            <div class="track-item" id="track-2">
+              <div class="track-info-group">
+                <button class="track-avatar" id="track-control-2" type="button" onclick="toggleTrack(2)"
+                  aria-label="Play Feral" aria-pressed="false">
+                  <img src="assets/thumbnails/feral.jpg" alt="Feral">
+                  <span class="thumbnail-state" aria-hidden="true">
+                    <i class="bi bi-play-fill thumbnail-action-icon" id="icon-2"></i>
+                    <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
+                  </span>
+                </button>
+                <div>
+                  <div class="track-title">
+                    Feral
+                  </div>
+                  <div class="track-genre">meganeko</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Track 4 -->
+            <div class="track-item" id="track-3">
+              <div class="track-info-group">
+                <button class="track-avatar" id="track-control-3" type="button" onclick="toggleTrack(3)"
+                  aria-label="Play Alpha-0" aria-pressed="false">
+                  <img src="assets/thumbnails/alpha-0.jpg" alt="Alpha-0">
+                  <span class="thumbnail-state" aria-hidden="true">
+                    <i class="bi bi-play-fill thumbnail-action-icon" id="icon-3"></i>
+                    <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
+                  </span>
+                </button>
+                <div>
+                  <div class="track-title">
+                    Alpha-0
+                  </div>
+                  <div class="track-genre">Optie Animation</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Track 5 -->
+            <div class="track-item" id="track-4">
+              <div class="track-info-group">
+                <button class="track-avatar" id="track-control-4" type="button" onclick="toggleTrack(4)"
+                  aria-label="Play Sentinel" aria-pressed="false">
+                  <img src="assets/thumbnails/sentinel.jpg" alt="Sentinel">
+                  <span class="thumbnail-state" aria-hidden="true">
+                    <i class="bi bi-play-fill thumbnail-action-icon" id="icon-4"></i>
+                    <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
+                  </span>
+                </button>
+                <div>
+                  <div class="track-title">
+                    Sentinel
+                  </div>
+                  <div class="track-genre">Noisestorm</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Track 6 -->
+            <div class="track-item" id="track-5">
+              <div class="track-info-group">
+                <button class="track-avatar" id="track-control-5" type="button" onclick="toggleTrack(5)"
+                  aria-label="Play The Master" aria-pressed="false">
+                  <img src="assets/thumbnails/the-master.png" alt="The Master">
+                  <span class="thumbnail-state" aria-hidden="true">
+                    <i class="bi bi-play-fill thumbnail-action-icon" id="icon-5"></i>
+                    <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
+                  </span>
+                </button>
+                <div>
+                  <div class="track-title">
+                    The Master
+                  </div>
+                  <div class="track-genre">Teminite x Boom Kitty</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Me section -->
+  <section class="me-section" id="about" aria-labelledby="meHeading">
+    <div class="me-card">
+      <div class="me-visual me-reveal">
+        <span class="me-visual-label" lang="ja" aria-hidden="true">釘崎野薔薇</span>
+        <img src="assets/images/Nobara-Kugisaki-cropped-2.png" alt="Nobara Kugisaki holding her signature hammer"
+          loading="lazy">
+      </div>
+
+      <div class="me-copy me-reveal">
+        <p class="me-kicker">ME</p>
+        <article class="me-content" id="meContent" aria-live="polite" aria-busy="false">
+          <h2 id="meHeading">Nobara Kugisaki</h2>
+          <p><strong>The Fearless Sorcerer</strong></p>
+          <p><strong>Nobara Kugisaki</strong> is a powerful and confident jujutsu sorcerer from
+            <em>Jujutsu Kaisen</em>, created by Gege Akutami. Born on August 7, Nobara grew up in a small
+            countryside village before moving to Tokyo to pursue her dream of living independently.
+          </p>
+          <p>As a first-year student at Tokyo Jujutsu High, she fights alongside Yuji Itadori and Megumi
+            Fushiguro under the guidance of Satoru Gojo.</p>
+          <p>Armed with her signature hammer, nails, and <strong>Straw Doll Technique</strong>, Nobara battles
+            curses with fierce determination and fearless confidence.</p>
+          <p>Proud of her identity and unwilling to compromise her values, Nobara believes in living life on
+            her own terms.</p>
+          <p class="me-quote"><strong>“I love myself when I'm pretty and all dressed up! And I love myself when
+              I'm being strong!”</strong></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills section -->
+  <section class="skills-section" id="skills" aria-labelledby="skillsHeading">
+    <header class="skills-header" id="skillsHeader">
+      <div class="skills-title-group">
+        <p class="skills-kicker">SKILLS / STACK</p>
+        <h2 id="skillsHeading">Technical Skills</h2>
+        <p class="skills-heading-accent">My Tech Stack</p>
+      </div>
+      <div class="skills-intro">
+        <p class="skills-roles">SOFTWARE ENGINEER · BACKEND DEVELOPER · FULL-STACK DEVELOPMENT</p>
+        <p class="skills-description">Passionate about building scalable applications, designing efficient APIs,
+          optimizing databases, and developing reliable distributed systems. Experienced in modern backend
+          technologies, frontend frameworks, cloud infrastructure, and system integration.</p>
+      </div>
+    </header>
+
+    <div class="skills-grid" id="skillsGrid" aria-live="polite" aria-busy="false">
+      <article class="skill-card">
+        <div class="skill-card-heading"><span>01</span>
+          <h3>Backend Development</h3>
+        </div>
+        <ul class="skill-list">
+          <li>Java</li>
+          <li>Spring Boot</li>
+          <li>PHP</li>
+          <li>Laravel</li>
+        </ul>
+      </article>
+      <article class="skill-card">
+        <div class="skill-card-heading"><span>02</span>
+          <h3>Frontend Development</h3>
+        </div>
+        <ul class="skill-list">
+          <li>React</li>
+          <li>TypeScript</li>
+          <li>JavaScript</li>
+          <li>HTML5</li>
+          <li>CSS3</li>
+          <li>Bootstrap</li>
+          <li>Material UI</li>
+          <li>Vite</li>
+          <li>GSAP</li>
+        </ul>
+      </article>
+      <article class="skill-card">
+        <div class="skill-card-heading"><span>03</span>
+          <h3>Databases &amp; Caching</h3>
+        </div>
+        <ul class="skill-list">
+          <li>PostgreSQL</li>
+          <li>MySQL</li>
+          <li>MariaDB</li>
+          <li>Redis</li>
+          <li>ClickHouse</li>
+          <li>SQL Optimization</li>
+          <li>Partitioning</li>
+        </ul>
+      </article>
+      <article class="skill-card">
+        <div class="skill-card-heading"><span>04</span>
+          <h3>DevOps &amp; Infrastructure</h3>
+        </div>
+        <ul class="skill-list">
+          <li>Linux</li>
+          <li>Docker</li>
+          <li>Nginx</li>
+          <li>OpenResty</li>
+          <li>Git</li>
+          <li>Gradle</li>
+          <li>Composer</li>
+          <li>Node.js</li>
+          <li>PHP-FPM</li>
+          <li>SSL / Certbot</li>
+        </ul>
+      </article>
+      <article class="skill-card">
+        <div class="skill-card-heading"><span>05</span>
+          <h3>Data Engineering &amp; Messaging</h3>
+        </div>
+        <ul class="skill-list">
+          <li>Apache Kafka</li>
+          <li>Debezium CDC</li>
+          <li>Apache Airflow</li>
+          <li>ETL Pipelines</li>
+          <li>Event-Driven Architecture</li>
+          <li>Transactional Outbox</li>
+          <li>Async Processing</li>
+        </ul>
+      </article>
+      <article class="skill-card">
+        <div class="skill-card-heading"><span>06</span>
+          <h3>AI &amp; Integration</h3>
+        </div>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>FastAPI</li>
+          <li>Speech-to-Text</li>
+          <li>Qwen3-ASR</li>
+          <li>REST API Integration</li>
+          <li>GPU Inference</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- Projects section -->
+  <section class="projects-section" id="projects" aria-labelledby="projectsHeading">
+    <header class="projects-header">
+      <p class="projects-kicker">WORK / PORTFOLIO</p>
+      <h2 id="projectsHeading">Featured Projects</h2>
+      <p class="projects-intro">A selection of projects, experiments, and engineering work.</p>
+    </header>
+
+    <div class="projects-grid" id="projectsGrid" data-projects-src="./projects.json" aria-busy="false"></div>
+
+    <div class="projects-actions">
+      <button type="button" class="projects-toggle" id="projectsToggle" aria-controls="projectsGrid"
+        aria-expanded="false" hidden>Show More ↓</button>
+    </div>
+    <p id="projectsStatus" class="visually-hidden" aria-live="polite"></p>
+  </section>
+
+  <!-- Contact section: paste inside <main>, after Projects -->
+  <section class="contact-section" id="contact" aria-labelledby="contactHeading">
+    <div class="contact-layout">
+      <div class="contact-details">
+        <p class="contact-kicker">CONTACT / CONNECT</p>
+        <h2 id="contactHeading">Let's build<br><em>something great.</em></h2>
+        <p class="contact-intro">Have a project in mind, a question, or an idea worth exploring? Send me a message and
+          let's talk about what we can create together.</p>
+        <div class="contact-availability"><span class="contact-status-dot" aria-hidden="true"></span> Open to
+          conversations & collaborations</div>
+        <div class="contact-socials">
+          <p class="contact-social-label">FIND ME ONLINE</p>
+          <div class="contact-social-links">
+            <!-- Replace # with your actual profile URLs before publishing -->
+            <a href="#" class="contact-social" aria-label="GitHub" title="GitHub"><i data-lucide="github"
+                aria-hidden="true"></i><span>GitHub</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            <a href="#" class="contact-social" aria-label="LinkedIn" title="LinkedIn"><i data-lucide="linkedin"
+                aria-hidden="true"></i><span>LinkedIn</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            <a href="#" class="contact-social" aria-label="Facebook" title="Facebook"><i data-lucide="facebook"
+                aria-hidden="true"></i><span>Facebook</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-panel">
+        <div class="contact-form-heading"><span>01 / SAY HELLO</span><i data-lucide="send" aria-hidden="true"></i></div>
+        <h3>Send a message</h3>
+        <p class="contact-form-help">Fill out the details below. Fields marked * are required.</p>
+        <form id="contactForm" class="contact-form" novalidate>
+          <div class="contact-field-row">
+            <div class="contact-field">
+              <label for="contactName">Full name <span aria-hidden="true">*</span></label>
+              <input type="text" id="contactName" name="name" autocomplete="name" placeholder="Your full name" required
+                minlength="2" maxlength="100">
+              <small class="contact-field-error" id="contactNameError"></small>
+            </div>
+            <div class="contact-field">
+              <label for="contactEmail">Email address <span aria-hidden="true">*</span></label>
+              <input type="email" id="contactEmail" name="email" autocomplete="email" placeholder="you@example.com"
+                required maxlength="254">
+              <small class="contact-field-error" id="contactEmailError"></small>
+            </div>
+          </div>
+          <div class="contact-field">
+            <label for="contactSubject">Subject <span aria-hidden="true">*</span></label>
+            <input type="text" id="contactSubject" name="subject" placeholder="What's this about?" required
+              minlength="3" maxlength="150">
+            <small class="contact-field-error" id="contactSubjectError"></small>
+          </div>
+          <div class="contact-field">
+            <label for="contactMessage">Message <span aria-hidden="true">*</span></label>
+            <textarea id="contactMessage" name="message" rows="6"
+              placeholder="Tell me a little about your project or idea..." required minlength="10"
+              maxlength="5000"></textarea>
+            <small class="contact-field-error" id="contactMessageError"></small>
+          </div>
+          <div class="contact-form-footer">
+            <button class="contact-submit" type="submit"><span>Send Message</span><i data-lucide="arrow-up-right"
+                aria-hidden="true"></i></button>
+            <p class="contact-form-note">Your message opens in your email app.</p>
+          </div>
+          <p class="contact-feedback" id="contactFeedback" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="js/script.js"></script>
+  <script src="js/cursor-effect.js"></script>
+  <script src="js/me.js"></script>
+  <script src="js/skills.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+
+</html>

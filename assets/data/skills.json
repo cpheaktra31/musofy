@@ -1,0 +1,81 @@
+[
+  {
+    "id": 1,
+    "name": "Backend Development",
+    "skills": [
+      { "name": "Java", "icon": "coffee" },
+      { "name": "Spring Boot", "icon": "leaf" },
+      { "name": "PHP", "icon": "code-xml" },
+      { "name": "Laravel", "icon": "layers" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Frontend Development",
+    "skills": [
+      { "name": "React", "icon": "atom" },
+      { "name": "TypeScript", "icon": "file-code-2" },
+      { "name": "JavaScript", "icon": "braces" },
+      { "name": "HTML5", "icon": "code-xml" },
+      { "name": "CSS3", "icon": "palette" },
+      { "name": "Bootstrap", "icon": "layout-grid" },
+      { "name": "Material UI", "icon": "component" },
+      { "name": "Vite", "icon": "zap" },
+      { "name": "GSAP", "icon": "clapperboard" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Databases & Caching",
+    "skills": [
+      { "name": "PostgreSQL", "icon": "database" },
+      { "name": "MySQL", "icon": "database" },
+      { "name": "MariaDB", "icon": "database" },
+      { "name": "Redis", "icon": "layers-3" },
+      { "name": "ClickHouse", "icon": "chart-column" },
+      { "name": "SQL Optimization", "icon": "gauge" },
+      { "name": "Partitioning", "icon": "table-properties" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "DevOps & Infrastructure",
+    "skills": [
+      { "name": "Linux", "icon": "terminal" },
+      { "name": "Docker", "icon": "container" },
+      { "name": "Nginx", "icon": "server" },
+      { "name": "OpenResty", "icon": "network" },
+      { "name": "Git", "icon": "git-branch" },
+      { "name": "Gradle", "icon": "package" },
+      { "name": "Composer", "icon": "package-check" },
+      { "name": "Node.js", "icon": "hexagon" },
+      { "name": "PHP-FPM", "icon": "workflow" },
+      { "name": "SSL / Certbot", "icon": "shield-check" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Data Engineering & Messaging",
+    "skills": [
+      { "name": "Apache Kafka", "icon": "radio-tower" },
+      { "name": "Debezium CDC", "icon": "refresh-cw" },
+      { "name": "Apache Airflow", "icon": "workflow" },
+      { "name": "ETL Pipelines", "icon": "git-merge" },
+      { "name": "Event-Driven Architecture", "icon": "network" },
+      { "name": "Transactional Outbox", "icon": "mail-check" },
+      { "name": "Async Processing", "icon": "clock-arrow-up" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "AI & Integration",
+    "skills": [
+      { "name": "Python", "icon": "code-2" },
+      { "name": "FastAPI", "icon": "server" },
+      { "name": "Speech-to-Text", "icon": "mic" },
+      { "name": "Qwen3-ASR", "icon": "brain-circuit" },
+      { "name": "REST API Integration", "icon": "plug" },
+      { "name": "GPU Inference", "icon": "cpu" }
+    ]
+  }
+]

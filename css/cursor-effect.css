@@ -1,0 +1,32 @@
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1020;
+  display: none;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.055) 34%,
+    rgba(255, 255, 255, 0) 72%
+  );
+  filter: blur(6px);
+  transform: translate3d(-200px, -200px, 0) translate(-50%, -50%);
+  transition: opacity 180ms ease;
+  will-change: transform;
+}
+
+.cursor-glow.is-visible {
+  opacity: 0.7;
+}
+
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cursor-glow {
+    display: block;
+  }
+}

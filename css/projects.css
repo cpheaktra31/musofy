@@ -1,0 +1,177 @@
+/* Projects section - follows the same design tokens as your Skills section. */
+.projects-section {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: clamp(4.5rem, 8vw, 7.5rem) 0 clamp(3rem, 7vw, 6rem);
+  scroll-margin-top: 72px;
+}
+
+.projects-header {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.projects-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  margin: 0 0 1rem;
+  color: var(--accent-primary, #e04b6a);
+  font-family: 'Spline Sans Mono', monospace;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.projects-kicker::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.projects-header h2 {
+  margin: 0;
+  color: var(--text-primary, #f5f5f5);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.055em;
+}
+
+.projects-intro {
+  margin: 1rem 0 0;
+  max-width: 58ch;
+  color: var(--text-secondary, #a7a7af);
+  line-height: 1.75;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+
+.project-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  transition: border-color 250ms ease, background 250ms ease;
+}
+
+.project-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-subtle);
+}
+
+.project-card[hidden] {
+  display: none !important;
+}
+
+.project-card-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #262930;
+}
+
+.project-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 350ms ease;
+}
+
+.project-card:hover .project-card-media img {
+  transform: scale(1.045);
+}
+
+.project-card-body {
+  padding: 1.15rem;
+}
+
+.project-card-index {
+  display: block;
+  margin-bottom: .55rem;
+  color: var(--accent-primary, #e04b6a);
+  font: 700 .67rem 'Spline Sans Mono', monospace;
+  letter-spacing: .08em;
+}
+
+.project-card-title {
+  margin: 0;
+  color: var(--text-primary, #f5f5f5);
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.projects-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.projects-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 156px;
+  gap: .6rem;
+  padding: .83rem 1.4rem;
+  border: 1px solid var(--accent-primary, #e04b6a);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-primary, #fff);
+  font: 600 .81rem 'Spline Sans Mono', monospace;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.projects-toggle:hover {
+  background: var(--accent-primary, #e04b6a);
+  color: #fff;
+}
+
+.projects-toggle:focus-visible {
+  outline: 2px solid var(--accent-primary, #e04b6a);
+  outline-offset: 4px;
+}
+
+.projects-toggle[hidden] {
+  display: none !important;
+}
+
+.projects-status {
+  color: var(--text-secondary, #a7a7af);
+}
+
+@media (max-width: 991.98px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 575.98px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card-media {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .project-card,
+  .project-card-media img,
+  .projects-toggle {
+    transition: none;
+  }
+}

@@ -1,0 +1,231 @@
+body {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.home-section {
+  display: grid;
+  min-height: calc(100vh - 9rem);
+  align-items: center;
+}
+
+.me-section {
+  width: 100%;
+  max-width: 1200px;
+  padding: clamp(4.5rem, 8vw, 7.5rem) 0 clamp(2rem, 5vw, 4rem);
+  scroll-margin-top: 72px;
+}
+
+.me-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 6vw, 5.5rem);
+  align-items: end;
+  overflow: hidden;
+}
+
+.me-visual {
+  position: relative;
+  display: flex;
+  min-height: 540px;
+  align-items: flex-end;
+  justify-content: center;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.me-visual::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: 10%;
+  bottom: -24%;
+  left: 10%;
+  height: 48%;
+  border-radius: 50%;
+  background: rgba(255, 59, 48, 0.16);
+  filter: blur(48px);
+}
+
+.me-visual img {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 50%;
+  display: block;
+  width: auto;
+  height: 100%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.48));
+}
+
+.me-visual-label {
+  position: absolute;
+  top: 1rem;
+  left: 4rem;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.42);
+  font-family: "Zen Kurenaido", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.me-copy {
+  position: relative;
+  z-index: 1;
+  padding-right: clamp(0rem, 2vw, 1rem);
+}
+
+.me-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0 0 1rem;
+  color: var(--accent-primary);
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.me-kicker::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.me-content h2 {
+  max-width: 13ch;
+  margin: 0 0 0.45rem;
+  color: var(--text-primary);
+  font-size: clamp(2rem, 4vw, 3.7rem);
+  font-weight: 850;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.me-content h2 + p {
+  margin-bottom: 1.5rem;
+  color: var(--accent-primary);
+  font-family: "Sora", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+}
+
+.me-content p {
+  max-width: 66ch;
+  margin: 0 0 1rem;
+  color: var(--text-secondary);
+  font-size: clamp(0.9rem, 1.35vw, 1rem);
+  line-height: 1.75;
+}
+
+.me-content strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.me-content em {
+  color: #c8cdd3;
+}
+
+.me-content .me-quote {
+  margin: 1.5rem 0 0;
+  padding: 1rem 1rem 1rem 1.25rem;
+  border-left: 2px solid var(--accent-primary);
+  background: rgba(255, 59, 48, 0.055);
+  color: var(--text-primary);
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.me-content .me-quote strong {
+  font-weight: 550;
+}
+
+.me-motion-ready .me-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 650ms ease,
+    transform 650ms ease;
+}
+
+.me-motion-ready .me-copy {
+  transition-delay: 100ms;
+}
+
+.me-motion-ready .me-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .me-card {
+    grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+    gap: 2rem;
+  }
+
+  .me-visual {
+    min-height: 460px;
+  }
+
+}
+
+@media (max-width: 767.98px) {
+  .home-section {
+    min-height: auto;
+    padding-top: 1rem;
+  }
+
+  .me-card {
+    grid-template-columns: 1fr;
+  }
+
+  .me-visual {
+    min-height: 430px;
+  }
+
+  .me-copy {
+    padding: 0.5rem 0.25rem 0.25rem;
+  }
+
+  .me-content h2 {
+    max-width: 16ch;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .me-section {
+    padding-top: 4rem;
+  }
+
+  .me-card {
+    padding: 0.75rem;
+  }
+
+  .me-visual {
+    min-height: 350px;
+  }
+
+  .me-copy {
+    padding: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .me-motion-ready .me-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
