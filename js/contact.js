@@ -1,7 +1,5 @@
 (() => {
   'use strict';
-  // REQUIRED: enter your own destination email before publishing.
-  const CONTACT_EMAIL = ''; // e.g. 'hello@yourdomain.com'
   const form = document.getElementById('contactForm');
   if (!form) return;
   const feedback = document.getElementById('contactFeedback');
@@ -25,7 +23,7 @@
     input.addEventListener('blur', () => { if (input.value) validate(input); });
     input.addEventListener('input', () => { if (input.getAttribute('aria-invalid') === 'true') validate(input); });
   });
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
     const inputs = Object.keys(rules).map(id => document.getElementById(id));
     const results = inputs.map(validate);
@@ -34,18 +32,39 @@
       inputs[results.indexOf(false)].focus();
       return;
     }
-    if (!CONTACT_EMAIL || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(CONTACT_EMAIL)) {
-      feedback.textContent = 'Contact form is not configured yet. Add your receiving email in contact.js.';
-      return;
-    }
     const name = document.getElementById('contactName').value.trim();
     const email = document.getElementById('contactEmail').value.trim();
     const subject = document.getElementById('contactSubject').value.trim();
     const message = document.getElementById('contactMessage').value.trim();
-    const body = `From: ${name}\nReply-to: ${email}\n\n${message}`;
-    const href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    feedback.textContent = 'Opening your email application. Review and send the drafted message there.';
-    window.location.href = href;
+
+    const submitButton = form.querySelector('.contact-submit');
+    const originalButtonText = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    feedback.textContent = '';
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({ name, email, subject, message })
+      });
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Could not send your message. Please try again.');
+      }
+
+      feedback.textContent = result.message || 'Your message was sent successfully.';
+      feedback.style.color = '#78d4a1';
+      form.reset();
+    } catch (error) {
+      feedback.textContent = error.message || 'Network error. Please try again later.';
+      feedback.style.color = '#ef8585';
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
   });
   if (window.lucide?.createIcons) window.lucide.createIcons();
 })();
