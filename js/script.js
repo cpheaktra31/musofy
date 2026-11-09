@@ -37,8 +37,16 @@ const tracks = [
     name: "The Master",
     genre: "Teminite x Boom Kitty",
     file: "assets/music/Teminite-x-Boom-Kitty-The-Master.mp3"
+  },
+  {
+    name: "Upload music",
+    genre: "Choose an audio file",
+    file: null
   }
 ];
+
+const UPLOADED_TRACK_INDEX = 6;
+let uploadedMusicUrl = null;
 
 // ------------------------------------------------- Audio nodes
 let audioCtx = null;
@@ -64,6 +72,79 @@ const progressThumb = document.getElementById('progressThumb');
 const currentTimeEl = document.getElementById('currentTime');
 const durationEl = document.getElementById('duration');
 const currentTrackTitle = document.getElementById('currentTrackTitle');
+
+// Track 7 upload data
+const uploadedMusicInput = document.getElementById('uploadedMusicInput');
+const uploadMusicButton = document.getElementById('uploadMusicButton');
+const uploadMusicButtonIcon = document.getElementById('uploadMusicButtonIcon');
+const uploadMusicButtonSpinner = document.getElementById('uploadMusicButtonSpinner');
+const uploadedTrackTitle = document.getElementById('uploadedTrackTitle');
+const uploadedTrackGenre = document.getElementById('uploadedTrackGenre');
+
+// Track titles only scroll when their rendered text is wider than its row.
+const trackTitleElements = Array.from(document.querySelectorAll('.track-title'));
+
+function prepareTrackTitleMarquee(titleElement) {
+  if (titleElement.querySelector('.track-title-marquee')) return;
+
+  const titleMarkup = titleElement.innerHTML.trim();
+  const titleText = titleElement.textContent.trim();
+  const marquee = document.createElement('span');
+  const primaryCopy = document.createElement('span');
+  const repeatedCopy = document.createElement('span');
+
+  marquee.className = 'track-title-marquee';
+  primaryCopy.className = 'track-title-copy';
+  repeatedCopy.className = 'track-title-copy';
+  repeatedCopy.setAttribute('aria-hidden', 'true');
+  primaryCopy.innerHTML = titleMarkup;
+  repeatedCopy.innerHTML = titleMarkup;
+  marquee.append(primaryCopy, repeatedCopy);
+  titleElement.replaceChildren(marquee);
+  titleElement.title = titleText;
+}
+
+function refreshTrackTitleMarquee(titleElement) {
+  const primaryCopy = titleElement.querySelector('.track-title-copy:not([aria-hidden])');
+  if (!primaryCopy) return;
+
+  titleElement.classList.remove('is-overflowing');
+  const contentWidth = primaryCopy.getBoundingClientRect().width;
+  const availableWidth = titleElement.clientWidth;
+  const isOverflowing = contentWidth > availableWidth + 1;
+
+  titleElement.classList.toggle('is-overflowing', isOverflowing);
+  if (isOverflowing) {
+    titleElement.style.setProperty('--marquee-duration', `${Math.max(7, contentWidth / 24)}s`);
+  } else {
+    titleElement.style.removeProperty('--marquee-duration');
+  }
+}
+
+function refreshTrackTitleMarquees() {
+  trackTitleElements.forEach(refreshTrackTitleMarquee);
+}
+
+function setTrackTitleText(titleElement, text) {
+  const copies = titleElement.querySelectorAll('.track-title-copy');
+  copies.forEach((copy) => { copy.textContent = text; });
+  titleElement.title = text;
+  requestAnimationFrame(() => refreshTrackTitleMarquee(titleElement));
+}
+
+trackTitleElements.forEach(prepareTrackTitleMarquee);
+requestAnimationFrame(refreshTrackTitleMarquees);
+
+if ('ResizeObserver' in window) {
+  const trackTitleResizeObserver = new ResizeObserver(refreshTrackTitleMarquees);
+  trackTitleElements.forEach((titleElement) => trackTitleResizeObserver.observe(titleElement));
+} else {
+  window.addEventListener('resize', refreshTrackTitleMarquees);
+}
+
+if (document.fonts?.ready) {
+  document.fonts.ready.then(refreshTrackTitleMarquees);
+}
 
 // Music transport controls
 const previousTrackButton = document.getElementById('previousTrackButton');
@@ -155,9 +236,31 @@ function initAudio() {
   }
 }
 
+function getPlayableTrackIndexes() {
+  return tracks.reduce((indexes, track, index) => {
+    if (track.file) indexes.push(index);
+    return indexes;
+  }, []);
+}
+
+function getAdjacentPlayableTrackIndex(trackIndex, direction) {
+  const playableIndexes = getPlayableTrackIndexes();
+  const currentPosition = playableIndexes.indexOf(trackIndex);
+
+  if (currentPosition === -1) {
+    return direction < 0
+      ? playableIndexes[playableIndexes.length - 1]
+      : playableIndexes[0];
+  }
+
+  return playableIndexes[
+    (currentPosition + direction + playableIndexes.length) % playableIndexes.length
+  ];
+}
+
 // ------------------------------------------------- Load & play a track
 async function playAudioTrack(trackIndex) {
-  if (!Number.isInteger(trackIndex) || !tracks[trackIndex]) return;
+  if (!Number.isInteger(trackIndex) || !tracks[trackIndex]?.file) return;
 
   stopAudioTrack();
   initAudio();
@@ -191,7 +294,7 @@ async function playAudioTrack(trackIndex) {
 
     player.onended = () => {
       if (audioElement === player && isPlaying && currentTrackIndex === trackIndex) {
-        const nextTrackIndex = (trackIndex + 1) % tracks.length;
+        const nextTrackIndex = getAdjacentPlayableTrackIndex(trackIndex, 1);
         playAudioTrack(nextTrackIndex);
       }
     };
@@ -232,6 +335,10 @@ function stopAudioTrack() {
 // ------------------------------------------------- Toggle Track Play / Stop
 function toggleTrack(index) {
   if (!Number.isInteger(index) || !tracks[index]) return;
+  if (index === UPLOADED_TRACK_INDEX && !tracks[index].file) {
+    uploadedMusicInput.click();
+    return;
+  }
 
   const isCurrentTrack = currentTrackIndex === index;
 
@@ -254,17 +361,11 @@ function toggleTrack(index) {
 
 // ------------------------------------------------- Previous / Play-Pause / Next
 function playPreviousTrack() {
-  const previousIndex = currentTrackIndex === -1
-    ? tracks.length - 1
-    : (currentTrackIndex - 1 + tracks.length) % tracks.length;
-  playAudioTrack(previousIndex);
+  playAudioTrack(getAdjacentPlayableTrackIndex(currentTrackIndex, -1));
 }
 
 function playNextTrack() {
-  const nextIndex = currentTrackIndex === -1
-    ? 0
-    : (currentTrackIndex + 1) % tracks.length;
-  playAudioTrack(nextIndex);
+  playAudioTrack(getAdjacentPlayableTrackIndex(currentTrackIndex, 1));
 }
 
 async function togglePlayback() {
@@ -296,6 +397,57 @@ async function togglePlayback() {
 previousTrackButton.addEventListener('click', playPreviousTrack);
 playPauseButton.addEventListener('click', togglePlayback);
 nextTrackButton.addEventListener('click', playNextTrack);
+
+// ------------------------------------------------- Track 7 local music data
+function isAudioFile(file) {
+  return file && (
+    file.type.startsWith('audio/') ||
+    /\.(aac|flac|m4a|mp3|ogg|wav)$/i.test(file.name)
+  );
+}
+
+function getUploadedTrackName(fileName) {
+  return fileName.replace(/\.[^/.]+$/, '').trim() || 'Uploaded music';
+}
+
+function getUploadedTrackGenre(file) {
+  const extension = file.name.split('.').pop();
+  return extension && extension !== file.name
+    ? `LOCAL ${extension.toUpperCase()}`
+    : 'LOCAL AUDIO';
+}
+
+function loadUploadedMusic(file) {
+  if (!isAudioFile(file)) {
+    uploadedTrackGenre.textContent = 'Choose a supported audio file';
+    return;
+  }
+
+  if (currentTrackIndex === UPLOADED_TRACK_INDEX) stopAudioTrack();
+  if (uploadedMusicUrl) URL.revokeObjectURL(uploadedMusicUrl);
+
+  uploadedMusicUrl = URL.createObjectURL(file);
+  const uploadedTrackData = tracks[UPLOADED_TRACK_INDEX];
+  uploadedTrackData.name = getUploadedTrackName(file.name);
+  uploadedTrackData.genre = getUploadedTrackGenre(file);
+  uploadedTrackData.file = uploadedMusicUrl;
+
+  setTrackTitleText(uploadedTrackTitle, uploadedTrackData.name);
+  uploadedTrackGenre.textContent = uploadedTrackData.genre;
+
+  playAudioTrack(UPLOADED_TRACK_INDEX);
+}
+
+uploadMusicButton.addEventListener('click', () => uploadedMusicInput.click());
+uploadedMusicInput.addEventListener('change', (event) => {
+  const [file] = event.target.files;
+  if (file) loadUploadedMusic(file);
+  event.target.value = '';
+});
+
+window.addEventListener('beforeunload', () => {
+  if (uploadedMusicUrl) URL.revokeObjectURL(uploadedMusicUrl);
+});
 
 // ------------------------------------------------- Volume & mute
 function setVolume(value) {
@@ -400,8 +552,14 @@ function updateUI() {
     const trackEl = document.getElementById(`track-${idx}`);
     const controlEl = document.getElementById(`track-control-${idx}`);
     const iconEl = document.getElementById(`icon-${idx}`);
+    const isEmptyUploadTrack = idx === UPLOADED_TRACK_INDEX && !tracks[idx].file;
 
-    if (idx === currentTrackIndex && isPlaying) {
+    if (isEmptyUploadTrack) {
+      trackEl.classList.remove('active');
+      controlEl.setAttribute('aria-label', 'Choose an audio file');
+      controlEl.setAttribute('aria-pressed', 'false');
+      iconEl.className = 'bi bi-upload thumbnail-action-icon';
+    } else if (idx === currentTrackIndex && isPlaying) {
       trackEl.classList.add('active');
       controlEl.setAttribute('aria-label', `Stop ${tracks[idx].name}`);
       controlEl.setAttribute('aria-pressed', 'true');
@@ -414,10 +572,20 @@ function updateUI() {
     }
   });
 
+  const uploadedTrackIsPlaying = currentTrackIndex === UPLOADED_TRACK_INDEX && isPlaying;
+  const uploadButtonLabel = tracks[UPLOADED_TRACK_INDEX].file
+    ? 'Replace uploaded audio file'
+    : 'Choose a local audio file';
+  uploadMusicButton.classList.toggle('is-playing', uploadedTrackIsPlaying);
+  uploadMusicButton.setAttribute('aria-label', uploadButtonLabel);
+  uploadMusicButton.title = uploadButtonLabel;
+  uploadMusicButtonIcon.setAttribute('aria-hidden', 'true');
+  uploadMusicButtonSpinner.setAttribute('aria-hidden', 'true');
+
   const selectedTrackIndex = currentTrackIndex === -1 ? 0 : currentTrackIndex;
   const selectedTrack = tracks[selectedTrackIndex];
-  const previousTrack = tracks[(selectedTrackIndex - 1 + tracks.length) % tracks.length];
-  const nextTrack = tracks[(selectedTrackIndex + 1) % tracks.length];
+  const previousTrack = tracks[getAdjacentPlayableTrackIndex(selectedTrackIndex, -1)];
+  const nextTrack = tracks[getAdjacentPlayableTrackIndex(selectedTrackIndex, 1)];
 
   currentTrackTitle.textContent = selectedTrack.name;
   currentTrackTitle.title = selectedTrack.name;

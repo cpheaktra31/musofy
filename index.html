@@ -64,7 +64,7 @@
             <a class="nav-link" href="#projects">Projects</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#chat">Chat</a>
+            <a class="nav-link" href="#contact">Chat</a>
           </li>
         </ul>
       </div>
@@ -175,7 +175,7 @@
                     <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
                   </span>
                 </button>
-                <div>
+                <div class="track-copy">
                   <div class="track-title">
                     Powersound (VIP) <span class="fw-light" style="font-size: 12px;"> • recommended</span>
                   </div>
@@ -195,7 +195,7 @@
                     <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
                   </span>
                 </button>
-                <div>
+                <div class="track-copy">
                   <div class="track-title">
                     Final Boss
                   </div>
@@ -215,7 +215,7 @@
                     <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
                   </span>
                 </button>
-                <div>
+                <div class="track-copy">
                   <div class="track-title">
                     Feral
                   </div>
@@ -235,7 +235,7 @@
                     <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
                   </span>
                 </button>
-                <div>
+                <div class="track-copy">
                   <div class="track-title">
                     Alpha-0
                   </div>
@@ -255,7 +255,7 @@
                     <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
                   </span>
                 </button>
-                <div>
+                <div class="track-copy">
                   <div class="track-title">
                     Sentinel
                   </div>
@@ -275,12 +275,40 @@
                     <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
                   </span>
                 </button>
-                <div>
+                <div class="track-copy">
                   <div class="track-title">
                     The Master
                   </div>
                   <div class="track-genre">Teminite x Boom Kitty</div>
                 </div>
+              </div>
+            </div>
+
+            <!-- Track 7: uploaded music -->
+            <div class="track-item" id="track-6">
+              <div class="track-info-group">
+                <button class="track-avatar upload-track-avatar" id="track-control-6" type="button"
+                  onclick="toggleTrack(6)" aria-label="Choose an audio file" aria-pressed="false">
+                  <span class="upload-track-placeholder" aria-hidden="true">
+                    <i class="bi bi-upload"></i>
+                  </span>
+                  <span class="thumbnail-state" aria-hidden="true">
+                    <i class="bi bi-upload thumbnail-action-icon" id="icon-6"></i>
+                    <span class="thumbnail-sound-wave"><span></span><span></span><span></span></span>
+                  </span>
+                </button>
+                <div class="track-copy">
+                  <div class="track-title" id="uploadedTrackTitle">
+                    Upload music
+                  </div>
+                  <div class="track-genre" id="uploadedTrackGenre">Choose an audio file</div>
+                </div>
+                <input class="visually-hidden" id="uploadedMusicInput" type="file" accept="audio/*">
+                <button class="upload-music-button" id="uploadMusicButton" type="button"
+                  aria-label="Choose a local audio file" title="Choose a local audio file">
+                  <i class="bi bi-upload" id="uploadMusicButtonIcon" aria-hidden="true"></i>
+                  <span class="upload-button-spinner" id="uploadMusicButtonSpinner" aria-hidden="true"></span>
+                </button>
               </div>
             </div>
           </div>
