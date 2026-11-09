@@ -5,6 +5,77 @@
 // fullscreen mode, and keyboard shortcuts.
 // ============================================================================
 
+// ------------------------------------------------- Primary navigation scroll state
+const primaryNavbar = document.querySelector('.musofy-navbar');
+const primaryNavigation = document.getElementById('musofyNavigation');
+const primaryNavLinks = Array.from(document.querySelectorAll('.musofy-navbar .nav-link[href^="#"]'));
+const primaryNavSections = primaryNavLinks
+  .map((link) => document.querySelector(link.getAttribute('href')))
+  .filter(Boolean);
+let navigationScrollFrame = null;
+
+function setActiveNavigation(sectionId) {
+  primaryNavLinks.forEach((link) => {
+    const isActive = link.getAttribute('href') === `#${sectionId}`;
+    link.classList.toggle('active', isActive);
+
+    if (isActive) {
+      link.setAttribute('aria-current', 'location');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+}
+
+function getCurrentNavigationSection() {
+  if (!primaryNavSections.length) return null;
+
+  const pageBottom = window.scrollY + window.innerHeight;
+  const documentBottom = document.documentElement.scrollHeight;
+  if (pageBottom >= documentBottom - 2) {
+    return primaryNavSections[primaryNavSections.length - 1];
+  }
+
+  const navbarHeight = primaryNavbar?.getBoundingClientRect().height ?? 0;
+  const activationLine = navbarHeight + Math.min(window.innerHeight * 0.28, 180);
+  let currentSection = primaryNavSections[0];
+
+  primaryNavSections.forEach((section) => {
+    if (section.getBoundingClientRect().top <= activationLine) {
+      currentSection = section;
+    }
+  });
+
+  return currentSection;
+}
+
+function updateActiveNavigation() {
+  const currentSection = getCurrentNavigationSection();
+  if (currentSection) setActiveNavigation(currentSection.id);
+  navigationScrollFrame = null;
+}
+
+function requestActiveNavigationUpdate() {
+  if (navigationScrollFrame === null) {
+    navigationScrollFrame = requestAnimationFrame(updateActiveNavigation);
+  }
+}
+
+primaryNavLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    setActiveNavigation(link.hash.slice(1));
+
+    if (window.innerWidth < 768 && primaryNavigation?.classList.contains('show') && window.bootstrap?.Collapse) {
+      window.bootstrap.Collapse.getOrCreateInstance(primaryNavigation).hide();
+    }
+  });
+});
+
+window.addEventListener('scroll', requestActiveNavigationUpdate, { passive: true });
+window.addEventListener('resize', requestActiveNavigationUpdate);
+window.addEventListener('hashchange', requestActiveNavigationUpdate);
+requestActiveNavigationUpdate();
+
 // Track metadata - Using local audio assets
 const tracks = [
   
@@ -153,12 +224,17 @@ const playPauseIcon = document.getElementById('playPauseIcon');
 const nextTrackButton = document.getElementById('nextTrackButton');
 const transportControls = document.querySelector('.transport-controls');
 const transportControlsSlot = document.querySelector('.transport-controls-slot');
+const footerSection = document.querySelector('.footer-section');
 
 let transportScrollFrame = null;
 
 function updateFloatingTransport() {
   const shouldFloat = transportControlsSlot.getBoundingClientRect().bottom <= 0;
+  const footerTop = footerSection?.getBoundingClientRect().top ?? window.innerHeight;
+  const footerOffset = Math.max(0, window.innerHeight - footerTop);
   transportControls.classList.toggle('is-floating', shouldFloat);
+  transportControls.classList.toggle('is-above-footer', footerOffset > 0);
+  transportControls.style.setProperty('--transport-footer-offset', `${footerOffset}px`);
   transportScrollFrame = null;
 }
 

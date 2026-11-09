@@ -96,15 +96,33 @@ body {
 }
 
 .musofy-navbar .nav-link {
+  position: relative;
   padding: 0.45rem 0.75rem;
   color: var(--text-secondary);
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.01em;
   transition:
     color var(--transition-fast),
-    background var(--transition-fast);
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.musofy-navbar .nav-link::after {
+  content: '';
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.2rem;
+  left: 0.75rem;
+  height: 1px;
+  border-radius: var(--radius-full);
+  background: var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-glow);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--transition-fast);
 }
 
 .musofy-navbar .nav-link:hover,
@@ -115,6 +133,12 @@ body {
 
 .musofy-navbar .nav-link.active {
   color: var(--accent-primary);
+  border-color: rgba(255, 59, 48, 0.16);
+  background: rgba(255, 59, 48, 0.07);
+}
+
+.musofy-navbar .nav-link.active::after {
+  transform: scaleX(1);
 }
 
 .musofy-menu-button {
@@ -177,7 +201,7 @@ body {
   font-size: clamp(1rem, 1.8vw, 1.15rem);
   line-height: 1.7;
   color: var(--text-secondary);
-  max-width: 520px;
+  max-width: 720px;
   font-weight: 400;
   margin: auto;
 }
@@ -558,8 +582,7 @@ canvas {
     color var(--transition-fast),
     background var(--transition-fast),
     border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
-    transform var(--transition-fast);
+    box-shadow var(--transition-fast);
 }
 
 .upload-music-button:hover {
@@ -567,7 +590,6 @@ canvas {
   border-color: var(--accent-primary);
   background: linear-gradient(145deg, rgba(255, 59, 48, 0.3), rgba(193, 18, 31, 0.18));
   box-shadow: 0 0 18px rgba(255, 59, 48, 0.18);
-  transform: translateY(-1px);
 }
 
 .upload-music-button:focus-visible {
@@ -682,7 +704,7 @@ canvas {
 
 .transport-controls.is-floating {
   position: fixed;
-  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px) + var(--transport-footer-offset, 0px));
   left: 50%;
   z-index: 1040;
   width: max-content;
@@ -697,6 +719,10 @@ canvas {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   transform: translateX(-50%);
+  transition:
+    bottom var(--transition-base),
+    opacity var(--transition-base),
+    transform var(--transition-base);
 }
 
 .transport-button {
@@ -842,6 +868,25 @@ canvas {
     gap: 0.15rem;
   }
 
+  .musofy-navbar .nav-link {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .musofy-navbar .nav-link::after {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    width: 2px;
+    height: 18px;
+    transform: translateY(-50%) scaleY(0);
+  }
+
+  .musofy-navbar .nav-link.active::after {
+    transform: translateY(-50%) scaleY(1);
+  }
+
   .music-layout {
     margin-top: 1.5rem;
   }
@@ -887,6 +932,12 @@ canvas {
   .freq-labels {
     padding: 7px 12px 10px;
     font-size: 0.5rem;
+  }
+
+  .transport-controls.is-floating.is-above-footer {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 1rem);
   }
 
 }
