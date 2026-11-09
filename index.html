@@ -462,7 +462,8 @@
       <p class="projects-intro">A selection of projects, experiments, and engineering work.</p>
     </header>
 
-    <div class="projects-grid" id="projectsGrid" data-projects-src="./projects.json" aria-busy="false"></div>
+    <div class="projects-grid" id="projectsGrid" data-projects-src="assets/data/projects.json" aria-busy="false">
+    </div>
 
     <div class="projects-actions">
       <button type="button" class="projects-toggle" id="projectsToggle" aria-controls="projectsGrid"
@@ -470,6 +471,48 @@
     </div>
     <p id="projectsStatus" class="visually-hidden" aria-live="polite"></p>
   </section>
+
+  <div class="project-modal" id="projectModal" role="dialog" aria-modal="true"
+    aria-labelledby="projectModalTitle" aria-describedby="projectModalDescription" hidden>
+    <div class="project-modal-backdrop" data-project-modal-close aria-hidden="true"></div>
+    <section class="project-modal-dialog" role="document" tabindex="-1">
+      <header class="project-modal-header">
+        <p class="project-modal-number" id="projectModalNumber">PROJECT 01</p>
+        <button class="project-modal-close" id="projectModalClose" type="button" aria-label="Close project details">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="project-modal-layout">
+        <div class="project-gallery">
+          <div class="project-gallery-stage">
+            <img id="projectGalleryImage" src="" alt="">
+            <button class="project-gallery-control project-gallery-previous" id="projectGalleryPrevious" type="button"
+              aria-label="Show previous project image">
+              <i data-lucide="chevron-left" aria-hidden="true"></i>
+            </button>
+            <button class="project-gallery-control project-gallery-next" id="projectGalleryNext" type="button"
+              aria-label="Show next project image">
+              <i data-lucide="chevron-right" aria-hidden="true"></i>
+            </button>
+            <p class="project-gallery-counter" id="projectGalleryCounter" aria-live="polite">1 / 1</p>
+          </div>
+          <div class="project-gallery-thumbnails" id="projectGalleryThumbnails" aria-label="Project image gallery">
+          </div>
+        </div>
+
+        <div class="project-modal-details">
+          <p class="project-modal-kicker">PROJECT OVERVIEW</p>
+          <h3 id="projectModalTitle">Untitled project</h3>
+          <p class="project-modal-description" id="projectModalDescription"></p>
+          <div class="project-modal-gallery-meta">
+            <i data-lucide="images" aria-hidden="true"></i>
+            <span id="projectModalGalleryMeta">1 image</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <!-- Contact section: paste inside <main>, after Projects -->
   <section class="contact-section" id="contact" aria-labelledby="contactHeading">
@@ -495,7 +538,7 @@
       </div>
 
       <div class="contact-form-panel">
-        <div class="contact-form-heading"><span>01 / SAY HELLO</span><i data-lucide="send" aria-hidden="true"></i></div>
+        <div class="contact-form-heading"><span>SAY HELLO</span><i data-lucide="send" aria-hidden="true"></i></div>
         <h3>Send a message</h3>
         <p class="contact-form-help">Fill out the details below. Fields marked * are required.</p>
         <form id="contactForm" class="contact-form" novalidate>
