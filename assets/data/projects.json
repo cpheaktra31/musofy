@@ -16,37 +16,48 @@
     "description": "I have experience in integrating AI technologies into various applications, including speech-to-text and natural language processing. I have worked with frameworks like FastAPI to build RESTful APIs that leverage AI models for real-time inference.",
     "thumbnail": "https://i.pinimg.com/736x/17/4a/70/174a707f4246712aef76e905a3eb353a.jpg",
     "galery": [
-      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg",
-      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg",
-      "https://i.pinimg.com/736x/ad/cb/5c/adcb5c8b2b97e49ac2ae289114dfa729.jpg"
+      "https://i.pinimg.com/736x/ee/e1/05/eee105826fefc0f9b404b05560da1d08.jpg",
+      "https://i.pinimg.com/736x/b7/68/eb/b768eb70147a536fa6b7f5b4187310cc.jpg",
+      "https://i.pinimg.com/1200x/d7/76/ae/d776aee44d89ee8ccdf70d93257d3cda.jpg"
     ]
   },
   {
     "id": 3,
     "name": "Project 03",
     "description": "Replace with your own project description.",
-    "thumbnail": "https://i.pinimg.com/1200x/27/84/c6/2784c6763e6b41ab610ae537fa79f163.jpg",
-    "galery": []
+    "thumbnail": "https://i.pinimg.com/736x/35/14/ba/3514ba41b6ee996ec228f70636db8a26.jpg",
+    "galery": [
+      "https://i.pinimg.com/736x/4c/f4/81/4cf481871859f9a80cc738022cc20129.jpg",
+      "https://i.pinimg.com/736x/80/b8/a7/80b8a766b4bbdc6cdc2e738f987b4e2a.jpg",
+      "https://i.pinimg.com/736x/e8/b2/b7/e8b2b74e0a1a2a1337123fa174329234.jpg"
+    ]
   },
   {
     "id": 4,
     "name": "Project 04",
     "description": "Replace with your own project description.",
-    "thumbnail": "https://i.pinimg.com/736x/8c/2a/4f/8c2a4f2a6dcb7e1efb7ce9ca1b1a8dcc.jpg",
-    "galery": []
+    "thumbnail": "https://i.pinimg.com/736x/0b/16/74/0b1674e78f45b641bfb7bb307b7bf38f.jpg",
+    "galery": [
+      "https://i.pinimg.com/736x/00/49/4d/00494d5b0834cab801650e0b12c46266.jpg",
+      "https://i.pinimg.com/736x/27/01/f1/2701f1c26f258ee351d05b1430120c12.jpg"
+    ]
   },
   {
     "id": 5,
     "name": "Project 05",
     "description": "Replace with your own project description.",
-    "thumbnail": "https://i.pinimg.com/736x/89/26/38/892638b21204e9fc61e9b5e1cd3bba7f.jpg",
-    "galery": []
+    "thumbnail": "https://i.pinimg.com/736x/ed/62/5d/ed625dc484bf2ca7e2dbdcbcf0ced718.jpg",
+    "galery": [
+      "https://i.pinimg.com/736x/6b/22/fa/6b22fa2cd4e23017ccf78b3451395840.jpg"
+    ]
   },
   {
     "id": 6,
     "name": "Project 06",
     "description": "Replace with your own project description.",
-    "thumbnail": "https://i.pinimg.com/736x/7a/f3/88/7af388bcfe22e22c8704e376dd8f954e.jpg",
-    "galery": []
+    "thumbnail": "https://i.pinimg.com/1200x/31/4b/68/314b68f4831e5b647eba568cb11a11e6.jpg",
+    "galery": [
+      "https://i.pinimg.com/736x/02/71/ad/0271ad416ac1658d7b3c27a46eea555b.jpg"
+    ]
   }
 ]

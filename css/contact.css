@@ -82,7 +82,7 @@
 }
 
 .contact-socials {
-  margin-top: clamp(3rem, 6vw, 5rem);
+  margin-top: clamp(1rem, 3vw, 2rem);
 }
 
 .contact-social-label {
@@ -298,7 +298,7 @@
   }
 
   .contact-socials {
-    margin-top: 2rem;
+    margin-top: 0.75rem;
   }
 }
 
